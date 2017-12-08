@@ -1,15 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>Henkilokohtaistamisen Toimintamalli</title>
 </head>
+
 <body>
-	<map name="ehoksTimeline">¨
-		<area shape="rect" coords="191,180,2694,225" href="#" alt="Urasuunnittelu">
+	<div style="width:100%;">
+		<img id="img_ID" width="100%" height="" usemap="#ehoksTimeline" src="images/HenkilokohtaistamisenToimintamalli3011_3.png"
+		    alt="">
+	</div>
+	<map id="map_ID" name="ehoksTimeline">
+		<area shape="rect" coords="191,180,2694,225" href="https://google.com" alt="Urasuunnittelu" title="Urasuunnittelu">
 	</map>
-	<img width="2732" height="1536" usemap="#ehoksTimeline" src="images/HenkilokohtaistamisenToimintamalli3011_3.png" alt="">
 </body>
+<script>
+	window.onload = function () {
+		var ImageMap = function (map, img) {
+			var n,
+				areas = map.getElementsByTagName("area"),
+				len = areas.length,
+				coords = [],
+				previousWidth = 2732;
+			for (n = 0; n < len; n++) {
+				coords[n] = areas[n].coords.split(",");
+			}
+			this.resize = function () {
+				var n, m, clen,
+					x = img.offsetWidth / previousWidth;
+				for (n = 0; n < len; n++) {
+					clen = coords[n].length;
+					for (m = 0; m < clen; m++) {
+						coords[n][m] *= x;
+					}
+					areas[n].coords = coords[n].join(",");
+				}
+				previousWidth = document.body.clientWidth;
+				return true;
+			};
+				window.onresize = this.resize;
+			},
+			imageMap = new ImageMap(document.getElementById("map_ID"), document.getElementById("img_ID"));
+		imageMap.resize();
+		return;
+	}
+</script>
+
 </html>
